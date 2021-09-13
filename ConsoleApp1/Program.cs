@@ -7,9 +7,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int[][] array = new int[3][];
-            array[0] = new int[11] { 3, 4, 5, 6, 7, 14, 18, 19, 20, 24, 25 };
-            array[1] = new int[11] { 1, 2,3, 4, 5, 6, 7, 14, 16, 21, 22 };
-            array[2] = new int[13] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 23, 24};
+            array[0] = new int[11] { 3, 4, 5, 6, 7, 14, 18, 19, 20, 24, 25 };// A
+            array[1] = new int[11] { 1, 2,3, 4, 5, 6, 7, 14, 16, 21, 22 };// B
+            array[2] = new int[13] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 23, 24};// C
             int[] universal = new int[25];
 
             for (int i = 0; i < universal.Length; i++)
@@ -17,41 +17,42 @@ namespace ConsoleApp1
                 universal[i] = i + 1;
             }
 
-            int[] arr = Difference(array[1], array[2]);
-            if(isNull(arr))
-            {
-                Console.WriteLine("Array = 0\n");
-            }
-            else
-            {
-            ShowArray(arr);
-            }
+            Console.WriteLine("B addition:\n");
+            int[] Badd = Addition(array[1], universal);//B
+            ShowArray(Badd);
+            Console.WriteLine();
+
+            Console.WriteLine("A accociation B(addition):\n");          
+            int[] A_acc_B_add = Accociation(Badd, array[0]);
+            ShowArray(A_acc_B_add);
+
+            Console.WriteLine("A addition:\n");
+            int[] A_add = Addition(array[0], universal);
+            ShowArray(A_add);
+
+            Console.WriteLine("B addition twice:\n");
+            int[] B_addTwice = Addition(Addition(array[1], universal), universal);
+            ShowArray(B_addTwice);
+
+            Console.WriteLine("A(addition) accociation B(double twice):\n");
+            int[] A_add_acc_B_addTwice = Accociation(A_add, B_addTwice);
+            ShowArray(A_add_acc_B_addTwice);
 
 
-            //int[] arr = Decussation(array[2], array[1]);
-            //ShowArray(arr);
-            //DelByValue(ref array[0], 25);
-            //DelByValue(ref array[0], 24);
-            //DelByValue(ref array[0], 20);
-            //DelByValue(ref array[0], 19);
-            //DelByValue(ref array[0], 18);
-            //DelByValue(ref array[0], 14);
-            //DelByValue(ref array[0], 7);
-            //DelByValue(ref array[0], 6);
-            //DelByValue(ref array[0], 5);
-            //int[] result = Decussation(array[0], array[1]);
-            //ShowArray(result);
-            //Провірка роботи функції доповнення до множини
+            Console.WriteLine("(A accociation B(addition)) difference (A(addition) accociation B(double twice)):\n");
+            int[] A_acc_B_add_diff_A_add_acc_B_addTwice = Difference(A_acc_B_add, A_add_acc_B_addTwice);
+            ShowArray(A_acc_B_add_diff_A_add_acc_B_addTwice);
 
-            //ShowArray(array[0]);
-            //int[] additionArray = Addition(array[0], universal);
-            //ShowArray(additionArray);
-            //int[] DadditionArray = Addition(additionArray, universal);
-            //ShowArray(DadditionArray);
+            Console.WriteLine("C addition:\n");
+            int[] C_add = Addition(array[2],universal);
+            ShowArray(C_add);
 
-            //Accociation(array[0], array[1]);
+            Console.WriteLine("((A accociation B(addition)) difference (A(addition) accociation B(double twice))) difference C(addition):\n ");
+            int[] A_acc_B_add_diff_A_add_acc_B_addTwice_diff_C_add = Difference(A_acc_B_add_diff_A_add_acc_B_addTwice, C_add);
+            ShowArray(A_acc_B_add_diff_A_add_acc_B_addTwice_diff_C_add);
+
         }
-        static int[] Difference(int[] array1, int[] array2)
+        static int[] Difference(int[] array1, int[] array2)//різниця
         {
             int[] result = array1[..];
             for (int i = 0; i < array1.Length; i++)
@@ -67,8 +68,10 @@ namespace ConsoleApp1
            
             return result;
         }
-        static int[] Decussation(int[]array1, int[] array2)
-        {
+        static int[] Decussation(int[]array1, int[] array2)//переріз
+        {//1234
+            //2345
+            //
             int[] result = null;
             int amount = 0;
             for(int i = 0; i < array1.Length; i++)
@@ -102,13 +105,11 @@ namespace ConsoleApp1
             }
             return result;
         }   
-        static int[] Accociation(int[]array1, int[] array2)
+        static int[] Accociation(int[]array1, int[] array2)//обьєднання
         {
             int[] result = new int[(array1.Length+array2.Length)] ;
             array1.CopyTo(result, 0);
-            ShowArray(result);
             array2.CopyTo(result, array1.Length);
-            ShowArray(result);
             for (int i = 0; i < result.Length; i++)
             {
                 for (int j = 0; j < result.Length; j++)
@@ -127,7 +128,7 @@ namespace ConsoleApp1
             Array.Sort(result);
             return result;
         }
-        static int[] Addition(int[] array , int[] universal)
+        static int[] Addition(int[] array , int[] universal)//доповнення до множини
         {
             int[] result = universal[..];//створюємо масив , в якого копіюємо універсум 
             for (int i = 0; i < array.Length; i++)//, який потім після операцій над ним стане доповненням множини
@@ -167,10 +168,17 @@ namespace ConsoleApp1
         }
         static bool isNull(int[] array)
         {
-            return array == null ? true : false;
+            bool ifNull = array == null ? true : false;
+            return ifNull;
         }
         static void ShowArray(int[] array)//ф-ція просто виводить масив
         {
+            if(isNull(array))
+            {
+                Console.WriteLine("Array = 0\n");
+            }
+            else
+            {
             Array.Sort(array);
             for (int i = 0; i < array.Length; i++)
             {
@@ -182,6 +190,7 @@ namespace ConsoleApp1
             }
             Console.WriteLine();
             Console.WriteLine();
+            }
         }
     }
 }

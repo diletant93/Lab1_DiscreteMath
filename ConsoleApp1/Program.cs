@@ -8,7 +8,7 @@ namespace ConsoleApp1
         {
             int[][] array = new int[3][];
             array[0] = new int[11] { 3, 4, 5, 6, 7, 14, 18, 19, 20, 24, 25 };
-            array[1] = new int[11] { 1, 2, 3, 4, 5, 6, 7, 14, 16, 21, 22 };
+            array[1] = new int[11] { 1, 2,3, 4, 5, 6, 7, 14, 16, 21, 22 };
             array[2] = new int[13] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 23, 24};
             int[] universal = new int[25];
 
@@ -17,8 +17,30 @@ namespace ConsoleApp1
                 universal[i] = i + 1;
             }
 
-            int[] result = Accociation(array[1], array[2]);
-            ShowArray(result);
+            int[] arr = Difference(array[1], array[2]);
+            if(isNull(arr))
+            {
+                Console.WriteLine("Array = 0\n");
+            }
+            else
+            {
+            ShowArray(arr);
+            }
+
+
+            //int[] arr = Decussation(array[2], array[1]);
+            //ShowArray(arr);
+            //DelByValue(ref array[0], 25);
+            //DelByValue(ref array[0], 24);
+            //DelByValue(ref array[0], 20);
+            //DelByValue(ref array[0], 19);
+            //DelByValue(ref array[0], 18);
+            //DelByValue(ref array[0], 14);
+            //DelByValue(ref array[0], 7);
+            //DelByValue(ref array[0], 6);
+            //DelByValue(ref array[0], 5);
+            //int[] result = Decussation(array[0], array[1]);
+            //ShowArray(result);
             //Провірка роботи функції доповнення до множини
 
             //ShowArray(array[0]);
@@ -29,7 +51,57 @@ namespace ConsoleApp1
 
             //Accociation(array[0], array[1]);
         }
-        static int[] Decussation
+        static int[] Difference(int[] array1, int[] array2)
+        {
+            int[] result = array1[..];
+            for (int i = 0; i < array1.Length; i++)
+            {
+                for (int j = 0; j < array2.Length; j++)
+                {
+                    if(array1[i] == array2[j])
+                    {
+                        DelByValue(ref result, array2[j]);
+                    }
+                }
+            }
+           
+            return result;
+        }
+        static int[] Decussation(int[]array1, int[] array2)
+        {
+            int[] result = null;
+            int amount = 0;
+            for(int i = 0; i < array1.Length; i++)
+            {
+                for (int j = 0; j < array2.Length; j++)
+                {
+                    if(array1[i] == array2[j])
+                    {
+                        amount++;
+                    }
+                }
+            }
+            bool check = false;
+            result = new int[amount];
+            for (int i = 0 , k = 0; i < array1.Length; i++)
+            {
+                for (int j = 0; j < array2.Length; j++)
+                {
+                    if (array1[i] == array2[j])
+                    {
+                        result[k] = array1[i];
+                        check = true;
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    k++;
+                    check = false;
+                }
+            }
+            return result;
+        }   
         static int[] Accociation(int[]array1, int[] array2)
         {
             int[] result = new int[(array1.Length+array2.Length)] ;
@@ -93,8 +165,13 @@ namespace ConsoleApp1
                 array = arr;
             }
         }
+        static bool isNull(int[] array)
+        {
+            return array == null ? true : false;
+        }
         static void ShowArray(int[] array)//ф-ція просто виводить масив
         {
+            Array.Sort(array);
             for (int i = 0; i < array.Length; i++)
             {
                 Console.Write($"Elem {(i+1)} = {array[i]}\t");

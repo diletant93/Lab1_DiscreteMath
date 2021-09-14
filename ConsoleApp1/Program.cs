@@ -51,7 +51,7 @@ namespace ConsoleApp1
             int[] A_acc_B_add_diff_A_add_acc_B_addTwice_diff_C_add = Difference(A_acc_B_add_diff_A_add_acc_B_addTwice, C_add);
             ShowArray(A_acc_B_add_diff_A_add_acc_B_addTwice_diff_C_add);
 
-        }
+        }    
         static int[] Difference(int[] array1, int[] array2)//різниця
         {
             int[] result = array1[..];
@@ -179,7 +179,6 @@ namespace ConsoleApp1
             }
             else
             {
-            Array.Sort(array);
             for (int i = 0; i < array.Length; i++)
             {
                 Console.Write($"Elem {(i+1)} = {array[i]}\t");

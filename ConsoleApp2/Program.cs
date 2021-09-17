@@ -7,7 +7,7 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
 
-            int[] arr1 = { 1, 2 };
+            int[] arr1 = { 1, 2};
             int[] arr2 = { 1, 3, 5 };
             int[][] DecProd = GetDecProduct(arr1, arr2);
             ShowArray(DecProd);
